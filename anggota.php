@@ -1,70 +1,81 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Perpustakaan - Anggota</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-<table width="1000" border="1">
-<tr>
-<td colspan="2" align="center"><h1>Sistem Informasi Perpustakaan</h1></td>
-</tr>
-<tr>
-<td width = "200">
-<ul>
-<li><a href="anggota.php">Anggota</a></li>
-<li><a href="buku.php">Buku</a></li>
-<li><a href="pinjam.php">Pinjam</a></li>
-<ul>
-
-</td>
-<td width="500">
-<a href="input_anggota.php">Input anggota</a>
- <table border="1" >
-                                        <thead>	
-
-          <tr>
-            <th >No</th>
-            <th >id_anggota </th>
-			<th >nama anggota </th>
-			<th >alamat </th>
-			<th >TTl </th>
-			<th >Status</th>
-			
-			<th >Aksi</th>
-          </tr>
-        </thead>
-                                    
-									
-
-                                    <tbody>
-									<?php 
-include "koneksi.php";
-$query	= "select * from anggota order by id_anggota";
-$sql	= mysqli_query ($koneksi,$query);
-$no = 1;
-while ($data=mysqli_fetch_array($sql)) {
-?>			
-                                        <tr class="odd gradeX">
-                                            <td><?php echo $no?></td>
-                                            <td><?php echo $data['id_anggota'];?></td>
-											 <td><?php echo $data['nm_anggota'];?></td>
-											  <td><?php echo $data['alamat'];?></td>
-											   <td><?php echo $data['ttl_anggota'];?></td>
-											    <td class="center"><?php echo $data['status_anggota'];?></td>
-											
-                                            <td class="center"><a href="edit_anggota.php?id=<?php echo $data['id_anggota']; ?>" > Edit </a>|<a href="hapus_anggota.php?id=<?php echo $data['id_anggota']; ?>" 
-	                                            onClick = "return confirm('Apakah Anda ingin mengapus  <?php echo $data['nm_anggota']; ?>?')"> hapus</a></td>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>Sistem Informasi Perpustakaan</h1>
+                </div>
+            </div>
+        </div>
+            <div class="row mt-3">
+                <div class="col-md-2 text-center">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="./" class="text-decoration-none">Home</a></li>
+                        <li class="list-group-item"><a href="anggota.php" class="text-decoration-none">Anggota</a></li>
+                        <li class="list-group-item"><a href="buku.php" class="text-decoration-none">Buku</a></li>
+                        <li class="list-group-item"><a href="pinjam.php" class="text-decoration-none">Pinjam</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-10">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="input_anggota.php" class="btn btn-primary">Tambah Anggota</a>
+                    </div>
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID Anggota</th>
+                                            <th>Nama Anggota</th>
+                                            <th>Alamat</th>
+                                            <th>TTL</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
                                         </tr>
-										
-                                        <?php $no++; }?>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        include "koneksi.php";
+                                        $query = "SELECT * FROM anggota ORDER BY id_anggota";
+                                        $sql = mysqli_query($koneksi, $query);
+                                        $no = 1;
+                                        while ($data = mysqli_fetch_array($sql)) {
+                                        ?>          
+                                        <tr>
+                                            <td><?php echo $no; ?></td>
+                                            <td><?php echo $data['id_anggota']; ?></td>
+                                            <td><?php echo ucwords($data['nm_anggota']); ?></td>
+                                            <td><?php echo ucwords($data['alamat']); ?></td>
+                                            <td><?php echo ucwords($data['ttl_anggota']); ?></td>
+                                            <td><?php echo ucwords(($data['status_anggota'] == 1) ? 'Aktif' : 'Tidak Aktif'); ?></td>
+                                            <td>
+                                                <a href="edit_anggota.php?id=<?php echo $data['id_anggota']; ?>" class="btn btn-warning">Edit</a>
+                                                <a href="hapus_anggota.php?id=<?php echo $data['id_anggota']; ?>" class="btn btn-danger" 
+                                                    onClick="return confirm('Apakah Anda ingin menghapus <?php echo $data['nm_anggota']; ?>?')">Hapus</a>
+                                            </td>
+                                        </tr>
+                                        <?php $no++; } ?>
                                     </tbody>
-									
-									
-
                                 </table>
-</td>
-</tr>
-<tr>
-<td colspan="2" align="center">Kelompok 5<br><script type='text/javascript' src='//eclkmpsa.com/adServe/banners?tid=94091_154020_0&tagid=2'></script> <br> <script type='text/javascript' src='//eclkmpbn.com/adServe/banners?tid=94091_154020_2'></script></td>
-</tr>
-</table>
+                            </div>
+                            <div class="card-footer text-center">
+                                Kelompok 5
+                            </div>
+                        </div>        
+                    </div>  
+            </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
