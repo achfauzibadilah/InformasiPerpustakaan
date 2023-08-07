@@ -1,6 +1,8 @@
 <?php
+ob_start();
 require 'koneksi.php';
 require 'cek.php';
+ob_end_clean();
 ?>
 
 <!DOCTYPE html>

@@ -1,3 +1,10 @@
+<?php
+ob_start();
+require 'koneksi.php';
+require 'cek.php';
+ob_end_clean();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,7 +111,6 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        require 'koneksi.php';
                                         $query = "SELECT * FROM anggota ORDER BY id_anggota";
                                         $sql = mysqli_query($koneksi, $query);
                                         $no = 1;
