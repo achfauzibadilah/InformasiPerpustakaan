@@ -3,7 +3,7 @@ include "koneksi.php";
 
 $tgl = date('Y-m-d');
 
-$query = mysql_query("UPDATE meminjam SET tgl_kembali		= '$tgl', kembali = '2'
+$query = mysqli_query($koneksi,"UPDATE meminjam SET tgl_kembali		= '$tgl', kembali = '2'
 										
 										where id_pinjam	='$_GET[id]'");
 if ($query) {

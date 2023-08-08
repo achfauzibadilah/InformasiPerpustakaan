@@ -141,7 +141,7 @@ ob_end_clean();
                                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$id_pinjam;?>">
                                                     Edit
                                                 </button>
-                                                <a class="btn btn-info" href="function.php?id=<?php echo $data['id_pinjam']; ?>"
+                                                <a class="btn btn-info" href="kembali_buku.php?id=<?php echo $data['id_pinjam']; ?>"
                                                 onClick="return confirm('Apakah Anda ingin mengembalikan <?php echo $data['judul_buku']; ?>?')">Kembalikan</a>
 
                                             </td>
