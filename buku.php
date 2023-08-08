@@ -79,7 +79,7 @@ ob_end_clean();
                         Not Yet Setup
                     </div> -->
                     <div>
-                    <a class="nav-link" href="logout.php ">
+                    <a class="nav-link btn btn-danger" href="logout.php ">
                         Logout
                     </a>
                     </div>

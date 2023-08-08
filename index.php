@@ -52,7 +52,7 @@ ob_end_clean();
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-reader"></i></div>
                                 Buku
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -79,7 +79,7 @@ ob_end_clean();
                         Not Yet Setup
                     </div> -->
                     <div>
-                    <a class="nav-link" href="logout.php ">
+                    <a class="nav-link btn btn-danger" href="logout.php ">
                         Logout
                     </a>
                     </div>

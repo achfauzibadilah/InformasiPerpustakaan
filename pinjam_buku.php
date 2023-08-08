@@ -53,7 +53,7 @@ ob_end_clean();
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-reader"></i></div>
                                 Buku
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -62,7 +62,7 @@ ob_end_clean();
                                     <a class="nav-link" href="buku.php">List Buku</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link active collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Pinjam
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -79,7 +79,7 @@ ob_end_clean();
                         Not Yet Setup
                     </div> -->
                     <div>
-                    <a class="nav-link" href="logout.php ">
+                    <a class="nav-link btn btn-danger" href="logout.php ">
                         Logout
                     </a>
                     </div>
@@ -132,7 +132,7 @@ ob_end_clean();
                                       ?>
                                       </select>
                                   </div>
-                                  <input class="btn btn-success" type="submit" name="simpan" value="simpan">
+                                  <input class="btn btn-success" type="submit" name="pinjam" value="simpan">
                                   </table>
                             </form>
                               </tr>

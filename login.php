@@ -65,7 +65,7 @@ if (!isset($_SESSION['log'])){
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <div class="small"><a href="register.html" class="text-dark">Belum punya akun? Lapor ke Admin Perpustakaan</a></div>
+                                    <div class="small"><a href="#" class="text-dark">Belum punya akun? Lapor ke Admin Perpustakaan</a></div>
                                 </div>
                             </div>
                         </div>

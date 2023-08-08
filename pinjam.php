@@ -53,7 +53,7 @@ ob_end_clean();
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-reader"></i></div>
                                 Buku
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -79,7 +79,7 @@ ob_end_clean();
                         Not Yet Setup
                     </div> -->
                     <div>
-                    <a class="nav-link" href="logout.php ">
+                    <a class="nav-link btn btn-danger" href="logout.php ">
                         Logout
                     </a>
                     </div>
@@ -121,7 +121,14 @@ ob_end_clean();
                                             order by id_pinjam";
                                             $sql	= mysqli_query ($koneksi,$query);
                                             $no = 1;
-                                            while ($data=mysqli_fetch_array($sql)) {;
+                                            while ($data=mysqli_fetch_array($sql)) {
+                                                $id_pinjam =$data['id_pinjam'];
+                                                $tgl_pinjam =$data['tgl_pinjam'];
+                                                $jumlah_pinjam =$data['jumlah_pinjam'];
+                                                $tgl_kembali =$data['tgl_kembali'];
+                                                $nm_anggota =$data['nm_anggota'];
+                                                $judul_buku =$data['judul_buku'];
+
                                         ?>   
                                         <tr>
                                             <td><?php echo $no; ?></td>
@@ -134,49 +141,64 @@ ob_end_clean();
                                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$id_pinjam;?>">
                                                     Edit
                                                 </button>
-                                                <a class="btn btn-info" href="kembali_buku.php?id=<?php echo $data['id_pinjam']; ?>"
+                                                <a class="btn btn-info" href="function.php?id=<?php echo $data['id_pinjam']; ?>"
                                                 onClick="return confirm('Apakah Anda ingin mengembalikan <?php echo $data['judul_buku']; ?>?')">Kembalikan</a>
 
                                             </td>
                                             </td>
                                         </tr>
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit<?=$id_anggota;?>">
-                                                    <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                    
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                        <h4 class="modal-title">Edit Anggota</h4>
+                                        <div class="modal fade" id="edit<?=$id_pinjam;?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Peminjam</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        
-                                                        <!-- Modal body -->
-                                                        <form method="post">
-                                                        <div class="modal-body">
-                                                        <b>Nama Anggota</b>
-                                                        <input type="text" name="nama" id="nama" value="<?=$nama;?>" class="form-control" required>
-                                                        <br>
-                                                        <b>Alamat Anggota</b>
-                                                        <input type="text" name="alamat" id="alamat" value="<?=$alamat;?>" class="form-control" required>
-                                                        <br>
-                                                        <b>Tempat, Tanggal Lahir</b>
-                                                        <input type="text" name="ttl" id="ttl" value="<?=$ttl;?>" class="form-control" required>
-                                                        <br>
-                                                        <input type="hidden" name="id_anggota" value="<?=$id_anggota;?>">
-                                                        <label for="status">Status</label>
-                                                        <select class="form-control" id="status" name="status" required>
-                                                            <option value="1">Aktif</option>
-                                                            <option value="2">Tidak Aktif</option>
-                                                        </select>
-                                                        <br>
-                                                        <button type="submit" class="btn btn-warning" name="updateanggota">Submit</button>
-                                                        </div>
-                                                        </form>
-                                                        
                                                     </div>
+                                                    <div class="modal-body">
+                                                        <form method="post">
+                                                            <div class="form-group">
+                                                                <label for="anggota">Nama Peminjam</label>
+                                                                <select name="anggota" class="form-control">
+                                                                <?php
+                                                                    $sql_anggota = "SELECT * FROM anggota ORDER BY id_anggota";
+                                                                    $kueri_anggota = mysqli_query($koneksi, $sql_anggota);
+                                                                    if (!$kueri_anggota) {
+                                                                        die("Error: " . mysqli_error($koneksi));
+                                                                    }
+
+                                                                    while ($row_anggota = mysqli_fetch_array($kueri_anggota)) {
+                                                                        $selected = '';
+                                                                        if ($row_anggota['id_anggota'] == $data['id_anggota']) {
+                                                                            $selected = 'selected';
+                                                                        }
+
+                                                                        echo "<option value='" . $row_anggota['id_anggota'] . "' " . $selected . ">" . $row_anggota['nm_anggota'] . "</option>";
+                                                                    }
+
+                                                                    mysqli_free_result($kueri_anggota);
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="buku">Judul Buku</label>
+                                                                <select name="buku" class="form-control">
+                                                                    <?php
+                                                                    $sql_buku = "SELECT * FROM buku ORDER BY kd_buku";
+                                                                    $kueri_buku = mysqli_query($koneksi, $sql_buku) or die(mysqli_connect_error());
+                                                                    while ($row_buku = mysqli_fetch_array($kueri_buku)) {
+                                                                        $selected = ($row_buku['kd_buku'] == $data['kd_buku']) ? 'selected' : '';
+                                                                        echo "<option value='{$row_buku['kd_buku']}' {$selected}>{$row_buku['judul_buku']}</option>";
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-warning" name="updatepinjam">Submit</button>
+                                                        </form>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
                                         <?php $no++; }?>
                                     </tbody>
                             </table>
