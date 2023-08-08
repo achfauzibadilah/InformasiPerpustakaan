@@ -53,7 +53,7 @@ ob_end_clean();
                                 </nav>
                             </div>
                             <a class="nav-link active collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-reader"></i></div>
                                 Buku
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -170,7 +170,7 @@ ob_end_clean();
                                                         <b>Penerbit</b>
                                                         <input type="text" name="penerbit" id="penerbit" value="<?=$penerbit;?>" class="form-control" required>
                                                         <br>
-                                                        <button type="submit" class="btn btn-warning" name="updatebuku">Submit</button>
+                                                        <button type="submit" class="btn btn-warning btn-block" name="updatebuku">Submit</button>
                                                         </div>
                                                         </form>
                                                         
