@@ -100,8 +100,8 @@ ob_end_clean();
                                 </button>                            
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered text-center">
-                                    <thead>
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="thead-dark">
                                         <tr class="text-uppercase">
                                             <th>No</th>
                                             <th>ID Anggota</th>
@@ -193,7 +193,7 @@ ob_end_clean();
                                                         <!-- Modal body -->
                                                         <form method="post">
                                                         <div class="modal-body">
-                                                        Apakah Anda Yakin Ingin Menghapus Barang <?=$nama;?> ?
+                                                        Apakah Anda Yakin Ingin Menghapus Anggota <?=$nama;?> ?
                                                         <input type="hidden" name="id_anggota" value="<?=$id_anggota;?>">
                                                         <br>
                                                         <br>

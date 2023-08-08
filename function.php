@@ -48,4 +48,49 @@ if(isset($_POST['hapusanggota'])) {
             header('location:anggota.php');
         }
     };
+
+
+// Menambah buku baru
+if (isset($_POST['addnewbuku'])) {
+    $kd_buku    = $_POST['kd_buku'];
+    $judul_buku = $_POST['judul'];
+    $pengarang  = $_POST['pengarang'];
+    $jenis_buku = $_POST['jenis'];
+    $penerbit   = $_POST['penerbit'];
+
+    $addtotable = mysqli_query($koneksi, "INSERT INTO buku(kd_buku, judul_buku, pengarang, jenis_buku, penerbit) VALUES ('$kd_buku', '$judul_buku', '$pengarang', '$jenis_buku', '$penerbit')");
+
+    if($addtotable){
+        echo "<script>alert('Data berhasil disimpan');
+        window.location.href = 'buku.php';</script>";
+    } else {
+        echo "<script>alert('Data gagal disimpan');
+        window.location.href = 'buku.php';</script>";
+    }
+};
+
+
+//update info buku
+if(isset($_POST['updatebuku'])) {
+    $kd_buku = $_POST['kd_buku'];
+    $judul_buku = $_POST['judul_buku'];
+    $pengarang = $_POST['pengarang'];
+    $jenis_buku = $_POST['jenis_buku'];
+    $penerbit = $_POST['penerbit'];
+    
+    $update = mysqli_query($koneksi, "UPDATE buku SET
+                                        judul_buku = '$judul_buku',
+                                        pengarang = '$pengarang',
+                                        jenis_buku = '$jenis_buku',
+                                        penerbit = '$penerbit'
+                                        WHERE kd_buku = '$kd_buku'");
+    
+    if($update){
+        header('location:buku.php');
+    } else {
+        echo 'Gagal';
+        header('location:buku.php');
+    }
+}
+
 ?>
