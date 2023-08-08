@@ -1,5 +1,6 @@
 <?php
 ob_start();
+require 'function.php';
 require 'koneksi.php';
 require 'cek.php';
 ob_end_clean();
@@ -49,7 +50,6 @@ ob_end_clean();
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav ">
                                     <a class="nav-link" href="anggota.php">List Anggota</a>
-                                    <a class="nav-link" href="input_anggota.php">Tambah Anggota</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -94,17 +94,20 @@ ob_end_clean();
                         </ol> -->
                         <div class="card mb-4">
                             <div class="card-header">
-                            <a href="input_anggota.php" class="btn btn-dark">Tambah Anggota</a>
+                                <!-- Button to Open the Modal -->
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                                Tambah Anggota
+                                </button>                            
                             </div>
-                            <div class="card-body text-center">
-                                <table class="table table-bordered">
+                            <div class="card-body">
+                                <table class="table table-bordered text-center">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-uppercase">
                                             <th>No</th>
                                             <th>ID Anggota</th>
                                             <th>Nama Anggota</th>
                                             <th>Alamat</th>
-                                            <th>TTL</th>
+                                            <th>Tempat, Tanggal Lahir</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -115,6 +118,10 @@ ob_end_clean();
                                         $sql = mysqli_query($koneksi, $query);
                                         $no = 1;
                                         while ($data = mysqli_fetch_array($sql)) {
+                                            $id_anggota = $data['id_anggota'];
+                                            $nama = $data['nm_anggota'];
+                                            $alamat = $data['alamat'];
+                                            $ttl = $data['ttl_anggota'];
                                         ?>          
                                         <tr>
                                             <td><?php echo $no; ?></td>
@@ -124,11 +131,80 @@ ob_end_clean();
                                             <td><?php echo ucwords($data['ttl_anggota']); ?></td>
                                             <td><?php echo ucwords(($data['status_anggota'] == 1) ? 'Aktif' : 'Tidak Aktif'); ?></td>
                                             <td>
-                                                <a href="edit_anggota.php?id=<?php echo $data['id_anggota']; ?>" class="btn btn-warning">Edit</a>
-                                                <a href="hapus_anggota.php?id=<?php echo $data['id_anggota']; ?>" class="btn btn-danger" 
-                                                    onClick="return confirm('Apakah Anda ingin menghapus <?php echo $data['nm_anggota']; ?>?')">Hapus</a>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$id_anggota;?>">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?=$id_anggota;?>">
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
+
+                                                <!-- Edit Modal -->
+                                                <div class="modal fade" id="edit<?=$id_anggota;?>">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Anggota</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        
+                                                        <!-- Modal body -->
+                                                        <form method="post">
+                                                        <div class="modal-body">
+                                                        <b>Nama Anggota</b>
+                                                        <input type="text" name="nama" id="nama" value="<?=$nama;?>" class="form-control" required>
+                                                        <br>
+                                                        <b>Alamat Anggota</b>
+                                                        <input type="text" name="alamat" id="alamat" value="<?=$alamat;?>" class="form-control" required>
+                                                        <br>
+                                                        <b>Tempat, Tanggal Lahir</b>
+                                                        <input type="text" name="ttl" id="ttl" value="<?=$ttl;?>" class="form-control" required>
+                                                        <br>
+                                                        <input type="hidden" name="id_anggota" value="<?=$id_anggota;?>">
+                                                        <label for="status">Status</label>
+                                                        <select class="form-control" id="status" name="status" required>
+                                                            <option value="1">Aktif</option>
+                                                            <option value="2">Tidak Aktif</option>
+                                                        </select>
+                                                        <br>
+                                                        <button type="submit" class="btn btn-warning" name="updateanggota">Submit</button>
+                                                        </div>
+                                                        </form>
+                                                        
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <!-- Delete Modal -->
+                                                <div class="modal fade" id="delete<?=$id_anggota;?>">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Anggota ?</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        
+                                                        <!-- Modal body -->
+                                                        <form method="post">
+                                                        <div class="modal-body">
+                                                        Apakah Anda Yakin Ingin Menghapus Barang <?=$nama;?> ?
+                                                        <input type="hidden" name="id_anggota" value="<?=$id_anggota;?>">
+                                                        <br>
+                                                        <br>
+                                                        <button type="submit" class="btn btn-danger" name="hapusanggota">Hapus</button>
+                                                        </div>
+                                                        </form>
+                                                        
+                                                    </div>
+                                                    </div>
+                                                </div>
+
                                         <?php $no++; } ?>
                                     </tbody>
                                 </table>
@@ -158,6 +234,43 @@ ob_end_clean();
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="assets/demo/datatables-demo.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
 </body>
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">Tambah Anggota</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <form method="post">
+                    <div class="modal-body">
+                        <b>Nama Anggota</b>
+                        <input type="text" name="nama" id="nama" placeholder="Masukkan Nama Anggota" class="form-control" required>
+                        <br>
+                        <b>Alamat Anggota</b>
+                        <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat Anggota" class="form-control" required>
+                        <br>
+                        <b>Tempat Tanggal Lahir</b>
+                        <br>
+                        <input type="text" name="ttl" id="ttl" placeholder="Tempat, Tanggal Lahir" class="form-control" required>
+                        <br>
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status" required>
+                            <option value="1">Aktif</option>
+                            <option value="2">Tidak Aktif</option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-success" name="addnewanggota">Submit</button>
+                    </div>
+                </form>
+                
+            </div>
+            </div>
+        </div>
 </html>
