@@ -78,12 +78,7 @@ if(isset($_POST['updatebuku'])) {
     $jenis_buku = $_POST['jenis_buku'];
     $penerbit = $_POST['penerbit'];
     
-    $update = mysqli_query($koneksi, "UPDATE buku SET
-                                        judul_buku = '$judul_buku',
-                                        pengarang = '$pengarang',
-                                        jenis_buku = '$jenis_buku',
-                                        penerbit = '$penerbit'
-                                        WHERE kd_buku = '$kd_buku'");
+    $update = mysqli_query($koneksi, "UPDATE buku SET judul_buku = '$judul_buku', pengarang = '$pengarang', jenis_buku = '$jenis_buku', penerbit = '$penerbit' WHERE kd_buku = '$kd_buku'");
     
     if($update){
         header('location:buku.php');
@@ -93,4 +88,57 @@ if(isset($_POST['updatebuku'])) {
     }
 }
 
+//Menghapus buku
+if(isset($_POST['hapusbuku'])) {
+    $kd_buku = $_POST['kd_buku'];
+
+    $hapus = mysqli_query($koneksi, "DELETE FROM buku WHERE kd_buku= '$kd_buku'");
+    if($hapus){
+        header('location:buku.php');
+        } else {
+            echo 'Gagal';
+            header('location:buku.php');
+        }
+    };
+
+//kembalikan buku
+
+$tgl = date('Y-m-d');
+$query = mysqli_query($koneksi,"UPDATE meminjam SET tgl_kembali	= '$tgl', kembali = '2' where id_pinjam	='$_GET[id]'");
+
+if ($query) {
+    echo "<script>alert('Buku Sudah Dikembalikan');
+    document.location.href='pinjam.php'</script>\n";
+} else {
+    echo "<script>alert('gagal');
+    document.location.href='pinjam.php'</script>\n";
+}
+
+//pinjam
+$anggota = $_POST['anggota'];
+$buku = $_POST['buku'];
+
+$tgl_kembali = date('Y-m-d', strtotime('+7 days')); // Menambahkan 7 hari dari tanggal peminjaman
+
+$query = "INSERT INTO meminjam(tgl_pinjam, jumlah_pinjam, tgl_kembali, id_anggota, kd_buku, kembali) VALUES ('" . date('Y-m-d') . "', 1, '$tgl_kembali', '$anggota', '$buku', 1)";
+$result = mysqli_query($koneksi, $query);
+
+if ($result) {
+    echo "<script>alert('Data berhasil disimpan');
+    window.location.href='pinjam.php';</script>";
+} else {
+    echo "<script>alert('Data gagal disimpan');
+    window.location.href='pinjam.php';</script>";
+}
+
+// hapus pinjam
+$id	= $_GET['id'];
+$query = mysqli_query($koneksi,"DELETE FROM meminjam WHERE id_pinjam='$id'");
+if ($query) {
+    echo "<script>alert('data berhasil dihapus');
+    document.location.href='pinjam.php'</script>\n";
+    } else {
+    echo "<script>alert('data gagal dihapus');
+    document.location.href='pinjam.php'</script>\n";
+    }
 ?>
