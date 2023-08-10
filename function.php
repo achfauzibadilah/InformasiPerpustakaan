@@ -101,37 +101,75 @@ if(isset($_POST['hapusbuku'])) {
         }
     };
 
-//kembalikan buku
-
-$tgl = date('Y-m-d');
-$query = mysqli_query($koneksi,"UPDATE meminjam SET tgl_kembali	= '$tgl', kembali = '2' where id_pinjam	='$_GET[id]'");
-
-if ($query) {
-    echo "<script>alert('Buku Sudah Dikembalikan');
-    document.location.href='pinjam.php'</script>\n";
-} else {
-    echo "<script>alert('gagal');
-    document.location.href='pinjam.php'</script>\n";
-}
 
 //pinjam
-$anggota = $_POST['anggota'];
-$buku = $_POST['buku'];
+if(isset($_POST['pinjam'])) {
+    $anggota = $_POST['anggota'];
+    $buku = $_POST['buku'];
 
-$tgl_kembali = date('Y-m-d', strtotime('+7 days')); // Menambahkan 7 hari dari tanggal peminjaman
+    $tgl_kembali = date('Y-m-d', strtotime('+7 days')); // Menambahkan 7 hari dari tanggal peminjaman
 
-$query = "INSERT INTO meminjam(tgl_pinjam, jumlah_pinjam, tgl_kembali, id_anggota, kd_buku, kembali) VALUES ('" . date('Y-m-d') . "', 1, '$tgl_kembali', '$anggota', '$buku', 1)";
-$result = mysqli_query($koneksi, $query);
+    $query = "INSERT INTO meminjam(tgl_pinjam, jumlah_pinjam, tgl_kembali, id_anggota, kd_buku, kembali) VALUES ('" . date('Y-m-d') . "', 1, '$tgl_kembali', '$anggota', '$buku', 1)";
+    $result = mysqli_query($koneksi, $query);
 
-if ($result) {
-    echo "<script>alert('Data berhasil disimpan');
-    window.location.href='pinjam.php';</script>";
-} else {
-    echo "<script>alert('Data gagal disimpan');
-    window.location.href='pinjam.php';</script>";
+    if ($result) {
+        echo "<script>alert('Data berhasil disimpan');
+        window.location.href='pinjam.php';</script>";
+    } else {
+        echo "<script>alert('Data gagal disimpan');
+        window.location.href='pinjam.php';</script>";
+    }
+}
+// $anggota = $_POST['anggota'];
+// $buku = $_POST['buku'];
+
+// $tgl_kembali = date('Y-m-d', strtotime('+7 days')); // Menambahkan 7 hari dari tanggal peminjaman
+
+// $query = "INSERT INTO meminjam(tgl_pinjam, jumlah_pinjam, tgl_kembali, id_anggota, kd_buku, kembali) VALUES ('" . date('Y-m-d') . "', 1, '$tgl_kembali', '$anggota', '$buku', 1)";
+// $result = mysqli_query($koneksi, $query);
+
+// if ($result) {
+//     echo "<script>alert('Data berhasil disimpan');
+//     window.location.href='pinjam.php';</script>";
+// } else {
+//     echo "<script>alert('Data gagal disimpan');
+//     window.location.href='pinjam.php';</script>";
+// }
+
+//edit pinjam
+if(isset($_POST['updatepinjam'])){
+    $anggota	= $_POST['anggota'];
+    $buku		= $_POST['buku'];
+    $tgl = date('Y-m-d');
+    $query = mysqli_query($koneksi,"UPDATE meminjam SET tgl_pinjam	='$tgl',
+										id_anggota			='$anggota',
+										kd_buku				='$buku'
+										where id_pinjam	='$_GET[id_pinjam]'");
+    if ($query) {
+    echo "<script>alert('data berhasil disimpan');
+    document.location.href='pinjam.php'</script>\n";
+    } else {
+    echo "<script>alert('data gagal disimpan');
+    document.location.href='pinjam.php'</script>\n";
+    }
 }
 
+// //kembalikan buku
+
+// $tgl = date('Y-m-d');
+// $query = mysqli_query($koneksi,"UPDATE meminjam SET tgl_kembali	= '$tgl', kembali = '2' where id_pinjam	='$_GET[id]'");
+
+// if ($query) {
+//     echo "<script>alert('Buku Sudah Dikembalikan');
+//     document.location.href='pinjam.php'</script>\n";
+// } else {
+//     echo "<script>alert('gagal');
+//     document.location.href='pinjam.php'</script>\n";
+// }
+
+
 // hapus pinjam
+
 $id	= $_GET['id'];
 $query = mysqli_query($koneksi,"DELETE FROM meminjam WHERE id_pinjam='$id'");
 if ($query) {
